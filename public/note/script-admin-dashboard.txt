@@ -1,0 +1,36 @@
+// validasi tambah-tambah cicilan
+// mengambil elemen dengan class yang dibutuhkan
+const biayaAsli = document.querySelector('.biayaAsli');
+const biayaSaatIni = document.querySelector('.biayaSaatIni');
+const cicilan = document.querySelector('.cicilan');
+const proses = document.querySelector('.proses');
+const biayaSekarang = document.querySelector('.biayaSekarang');
+const alertMelebihiBatasPembayaran = document.querySelector('.alertMelebihiBatasPembayaran');
+
+// mendefinisikan event click pada tombol proses
+proses.addEventListener('click', function() {
+    let nilaiSaatIni = parseInt(biayaSaatIni.value);
+    let nilaiCicilan = parseInt(cicilan.value);
+
+    // jika nilai cicilan kosong atau tidak diisi
+    if (!nilaiCicilan) {
+        return;
+    }
+
+    let totalBiaya = nilaiSaatIni + nilaiCicilan;
+
+    // jika total biaya melebihi biaya asli
+    if (totalBiaya > biayaAsli.value) {
+        // alert('Melebihi batas!');
+        alertMelebihiBatasPembayaran.style.transform = 'translateY(0)';
+        setTimeout(() => {
+            alertMelebihiBatasPembayaran.style.transform = 'translateY(100%)';
+        }, 5000);
+        nilaiCicilan = biayaAsli.value - nilaiSaatIni;
+        cicilan.value = nilaiCicilan;
+    }
+
+    // menghitung nilai biaya sekarang
+    let biayaSekarangValue = nilaiSaatIni + nilaiCicilan;
+    biayaSekarang.value = biayaSekarangValue;
+});

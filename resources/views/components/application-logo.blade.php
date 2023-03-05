@@ -1,0 +1,1 @@
+<img src="{{ asset('img/watermefy-2.png') }}" alt="">

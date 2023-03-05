@@ -1,0 +1,274 @@
+@extends('layouts.main') 
+
+@section('main')
+    <div class="bg-white w-[1100px] p-10 mx-auto my-10 text-slate-500">
+        {{-- title name --}}
+        <h1 class="text-2xl text-center font-bold">Form Pembayaran Air</h1>
+
+        {{-- section name Daftar Pengguna Air Bersih --}}
+        <h2 class="mt-10 text-lg font-bold">Form Daftar Pengguna Air Bersih</h2>
+        <form action="/9r2jfwdjsaf0" method="post" autocomplete="off" class="mt-4">
+            @csrf
+            <div class="flex items-center">
+                <label for="name" class="mr-52">Nama</label>
+                <input type="text" name="name" id="name" onkeyup="addUserCheck()" placeholder="Nama Lengkap" class="inputNameUser w-52 border-2 border-slate-400 p-2 rounded-md focus:outline-none">
+                @error('name')
+                    <p class="ml-2 text-red-500">{{ $message }}</p>                    
+                @enderror
+            </div>
+
+            <div class="flex items-center mt-2">
+                <label for="status" class="mr-52">Status</label>
+                <select name="status" id="status" class="w-52 border-2 border-slate-400 p-2  rounded-md focus:outline-none">
+                    <option value="Kontrakan">Kontrakan</option>
+                    <option value="Rumah Tangga">Rumah Tangga</option>
+                </select>
+                @error('status')
+                    <p class="ml-2 text-red-500">{{ $message }}</p>                    
+                @enderror
+            </div>
+
+            {{-- url --}}
+            <input type="hidden" name="url" id="" value="{{ uniqid() }}">
+
+            <div class="w-[465px] mt-5 flex justify-end">
+                <button type="submit" disabled class="buttonAddUser bg-blue-500 opacity-40 px-5 py-2 rounded-md text-white">Simpan</button>
+            </div>
+        </form>
+
+        {{-- section name table daftar pengguna air --}}
+        <h2 class="mt-10 text-lg font-bold">Pengguna Air Bersih</h2>
+        <table class="w-max mt-3 border-2 border-slate-400">
+            <tr class="">
+                <th class="font-bold p-2 border-2 border-slate-400">Nama</th>
+                <th class="font-bold p-2 border-2 border-slate-400">Status</th>
+                <th colspan="2" class="font-bold p-2 border-2 border-slate-400">Action</th>
+            </tr>
+            @foreach ($tenants as $tenant)
+                <tr>
+                    <td class="p-2 border-2 border-slate-400">{{ Str::title($tenant->name) }}</td>
+                    <td class="p-2 border-2 border-slate-400">{{ $tenant->status }}</td>
+                    <td class="py-2 px-2 border-b-2 border-slate-400"><a href="/admin/tenant/{{ $tenant->id }}/edit"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                    <td class="py-2 border-b-2 border-slate-400"><div class="buttonHapusUser w-5 h-5 flex justify-center items-center cursor-pointer"><i class="fa-solid fa-trash-can"></i></div></td>
+                </tr>
+            @endforeach
+                @if ($tenants->count() < 1)
+                    <tr><td colspan="3" class="p-2">Tidak ada user yang ditemukan</td></tr>
+                @endif
+        </table>
+
+        {{-- section pembayaran --}}
+        <h2 class="mt-20 text-lg font-bold">Pembayaran</h2>
+
+        {{-- form pemayaran --}}
+        <form action="/ijqdwf03fjids" method="post" class="mt-7">
+            @csrf
+            {{-- name tenant --}}
+            <div class="flex items-center">
+                <label for="nameB" class="w-[400px]">Nama</label>
+                <select name="tenants[]" id="nameB" class="w-full border-2 border-slate-400 p-2  rounded-md focus:outline-none">
+                    @foreach ($tenants as $tenant)
+                        <option value="{{ $tenant->id }}">{{ Str::title($tenant->name) }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            {{-- bulan --}}
+            <div class="flex items-center mt-4">
+                <label for="month" class="w-[400px]">Bulan</label>
+                <select name="month" id="month" class="w-full border-2 border-slate-400 p-2  rounded-md focus:outline-none">
+                    <option value="Januari">Januari</option>
+                    <option value="Februari">Februari</option>
+                    <option value="Maret">Maret</option>
+                    <option value="April">April</option>
+                    <option value="Mei">Mei</option>
+                    <option value="Juni">Juni</option>
+                    <option value="Juli">Juli</option>
+                    <option value="Agustus">Agustus</option>
+                    <option value="September">September</option>
+                    <option value="Oktber">Oktber</option>
+                    <option value="November">November</option>
+                    <option value="Desember">Desember</option>
+                </select>
+            </div>
+
+            {{-- tahun --}}
+            <div class="flex items-center mt-4">
+                <label for="year" class="w-[400px]">Tahun</label>
+                <input type="number" min="0" max="3999" name="year" id="year" value="{{ now()->year }}" onkeyup="checkPay()" class="inputText inputNumber w-full border-2 border-slate-400 p-2  rounded-md focus:outline-none">
+            </div>
+            @error('year')
+                <p class="text-red-600 ml-72 mt-1">{{ $message }}</p>
+            @enderror
+
+            {{-- biaya_sewa_air --}}
+            <div class="flex items-center mt-4">
+                <label for="biaya_sewa_air" class="w-[400px]">Biaya Sewa Air</label>
+                <input type="number" min="0" max="9999999999" name="biaya_sewa_air" id="biaya_sewa_air" placeholder="Rp. ;" onkeyup="checkPay()" class="inputText inputNumber inputNumberDua w-full border-2 border-slate-400 p-2  rounded-md focus:outline-none">
+            </div>
+            @error('biaya_sewa_air')
+                <p class="text-red-600 ml-72 mt-1">{{ $message }}</p>
+            @enderror
+
+            {{-- telah_dibayar	 --}}
+            <div class="flex items-center mt-4">
+                <label for="telah_dibayar" class="w-[400px]">Biaya yang telah dibayar</label>
+                <input type="number" min="0" max="9999999999" name="telah_dibayar" id="telah_dibayar" placeholder="**tulis angka 0 jika belum membayar" onkeyup="checkPay()" class="inputText inputNumber telahBayar inputNumberDua w-full border-2 border-slate-400 p-2 rounded-md appearance-none focus:outline-none">
+            </div>
+            @error('telah_dibayar')
+                <p class="text-red-600 ml-72 mt-1">{{ $message }}</p>
+            @enderror
+
+            {{-- tanggal_dibayar --}}
+            <div class="flex items-center mt-4">
+                <label for="tanggal_dibayar" class="w-[400px]">Tanggal pembayaran terakhir</label>
+                <input type="date" name="tanggal_dibayar" id="tanggal_dibayar" class="inputDate w-full border-2 border-slate-400 p-2  rounded-md focus:outline-none">
+            </div>
+            @error('tanggal_dibayar')
+                <p class="text-red-600 ml-72 mt-1">{{ $message }}</p>
+            @enderror
+
+            {{-- tanggal_lunas --}}
+            <div class="flex items-center mt-4">
+                <label for="tanggal_lunas" class="w-[400px]">Tanggal Lunas</label>
+                <input type="date" name="tanggal_lunas" id="tanggal_lunas"  class="inputDate w-full border-2 border-slate-400 p-2  rounded-md focus:outline-none">
+            </div>
+            @error('tanggal_lunas')
+                <p class="text-red-600 ml-72 mt-1">{{ $message }}</p>
+            @enderror
+
+            <div class="w-full flex justify-end mt-3">
+                <button type="submit" disabled class="buttonPay bg-blue-500 opacity-40 text-white py-2 px-5 rounded-md">Simpan</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="bg-white w-full mt-10 pb-10">
+        {{-- container search dan form pengguna air bersih --}}
+        <div class="pt-5 sticky z-20 top-0 bg-white md-768:pt-10 md-768:-top-6">
+            <div class="bg-primary w-[95%] h-14 mx-auto px-5 flex justify-between items-center sticky z-20 top-5 rounded-md md-768:w-[90%]  lg-1094:w-[1100px]">
+            <h1 class="text-white-primary text-lg font-bold">Daftar Pengguna Air Bersih</h1>
+
+            {{-- form cari pengguna desktop --}}
+            <form action="/admin/dashboard" method="get" autocomplete="off" class="hidden md-768:block">
+                <input type="search" name="search" id="search" value="{{ (request('search' ? : '')) }}" placeholder="Cari pengguna" oninput="checkInput()" class="inputSearch bg-blue-secondary w-72 py-1 px-2 rounded-md text-white-primary border-slate-500 focus:border-slate-500 focus:ring-0 focus:outline-none">
+                <button type="submit" disabled class="btnSearch"></button>
+            </form>
+
+            {{-- button cari pengguna --}}
+            <div class="w-6 h-6 flex justify-end items-center md-768:hidden" onclick="buttonSearch()">
+                <i class="fa-solid fa-magnifying-glass text-white-primary"></i>
+            </div>
+        </div>
+        </div>
+
+        {{-- container nama pengguna --}}
+        @foreach ($tenants as $tenant)
+            <div class="container-nama-pangguna w-full">
+                {{-- nama pengguna --}}
+                <div class="btnDropDownNamaPengguna {{ ($loop->iteration % 2 == 0 ? 'bg-gray-light' : 'bg-gray-dark') }} w-[95%] h-11 mx-auto mt-1 rounded-md sticky z-10 top-[80px] flex justify-between items-center md-768:w-[90%] md-768:cursor-pointer lg-1094:w-[1100px]">
+                    <h3 class="text-primary font-bold px-5 sm-393:hidden">{{ Str::limit(Str::title($tenant->name), 26) }}</h3>
+                    <h3 class="text-primary font-bold px-5 hidden sm-393:block sm-428:hidden">{{ Str::limit(Str::title($tenant->name), 30) }}</h3>
+                    <h3 class="text-primary font-bold px-5 hidden sm-428:block md-768:hidden">{{ Str::limit(Str::title($tenant->name), 35) }}</h3>
+                    <h3 class="text-primary font-bold px-5 hidden md-768:block md-820:hidden">{{ Str::limit(Str::title($tenant->name), 65) }}</h3>
+                    <h3 class="text-primary font-bold px-5 hidden md-820:block">{{ Str::limit(Str::title($tenant->name), 75) }}</h3>
+
+                    <i class="arrowDown fa-solid fa-sort-down text-primary text-2xl -mt-3 px-5"></i>
+                </div>
+
+                {{-- container table --}}
+                <div class="dropDownNamaPengguna w-[95%] mx-auto h-0 mt-0.2 overflow-hidden md-768:w-[90%] lg-1094:w-[1100px]">
+                    <table class="{{ ($loop->iteration % 2 == 0 ? 'bg-gray-light' : 'bg-gray-dark') }} w-max text-sm border-none lg-1094:w-[1100px]">
+                        <tr class="rounded-md">
+                            <th class="px-2 py-3">No</th>
+                            <th class="px-2 py-3">Bulan</th>
+                            <th class="px-2 py-3">Tahun</th>
+                            <th class="px-2 py-3">Biaya Sewa Air</th>
+                            <th class="px-2 py-3">Jumlah Yang Dibayar</th>
+                            <th class="px-2 py-3">Sisa Biaya Air</th>
+                            <th class="px-2 py-3">Tanggal Pembayaran Terakhir</th>
+                            <th class="px-2 py-3">Tanggal Lunas</th>
+                            <th colspan="2" class="px-2 py-3">Action</th>
+                        </tr>
+                        @foreach ($tenant->pay as $pay)
+                            <tr class="rounded-md border-y-[4px] border-y-white">
+                                <td class="px-2 py-3 text-center">{{ $loop->iteration }}</td>
+                                <td class="px-2 py-3 text-center">{{ $pay->month }}</td>
+                                <td class="px-2 py-3 text-center">{{ $pay->year }}</td>
+                                <td class="px-2 py-3 text-center">Rp. {{ number_format($pay->biaya_sewa_air,0,'','.') }}</td>
+                                <td class="px-2 py-3 text-center">Rp. {{ number_format($pay->telah_dibayar,0,'','.') }}</td>
+                                <td class="px-2 py-3 {{ ($pay->sisa_bayar == 0 ? 'text-green-600 font-bold' : '') }} text-center">{{ ($pay->sisa_bayar == 0 ? 'Lunas' : 'Rp. ' . number_format($pay->sisa_bayar,0,'','.')) }}</td>
+                                <td class="px-2 py-3 {{ ($pay->tanggal_dibayar === NULL ? 'text-red-600 font-bold' : '') }} text-center">{{ ($pay->tanggal_dibayar === NULL ? 'Belum Membayar' : Carbon\Carbon::parse($pay->tanggal_dibayar)->format('d F, Y')) }}</td>
+                                <td class="px-2 py-3 {{ ($pay->tanggal_lunas === NULL ? 'text-red-600 font-bold' : '') }} text-center">{{ ($pay->tanggal_lunas === NULL ? 'Belum Lunas' : Carbon\Carbon::parse($pay->tanggal_lunas)->format('d F, Y')) }}</td>
+                                <td class="px-2 py-3"><a href="/admin/pay/{{ $pay->id }}/edit"><i class="fas fa-edit"></i></a></td>
+                                <td class="px-2 py-3">
+                                    {{-- <form action="/ijqdwf03fjids/{{ $pay->id }}" method="post">
+                                        @method('delete')
+                                        @csrf
+                                        <button type="submit">Hapus</button>
+                                    </form> --}}
+                                    <i class="buttonHapusUser fas fa-trash-alt cursor-pointer"></i>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+            </div>
+        @endforeach
+        @if ($tenants->count() < 1)
+            <div class="w-full h-10 mt-10 text-center">Tidak ada tenant yang ditemukan</div>
+        @endif
+    </div>
+
+    <form action="{{ route('logout') }}" method="post">
+        @csrf
+        <button type="submit" class="bg-red-500 py-2 px-4 m-5 text-sm text-white rounded-md">Logout</button>
+    </form>
+
+    {{-- alert hapus tenant --}}
+    @foreach ($tenants as $tenant)
+        <div class="alertHapusUser bg-[#0000008a] hidden justify-center items-center fixed z-50 top-0 right-0 bottom-0 left-0">
+            <div class="bg-white w-80 px-10 py-5 rounded-md">
+                <h1 class="text-center font-bold">Hapus {{ Str::title(Str::limit($tenant->name, 17)) }}!</h1>
+                <p class="text-slate-500 text-sm text-center font-bold mt-5">Apakah anda yakin?</p>
+                <div class="w-full flex justify-end items-center mt-5">
+                    <p class="tidakHapusUser bg-[#3b83f6cc] hover:bg-blue-500 py-1 px-4 mr-3 cursor-pointer rounded-md text-white">Tidak</p>
+                    <form action="/9r2jfwdjsaf0/
+                    {{ $tenant->id }}" method="post">
+                        @method('delete') 
+                        @csrf 
+                        <button type="submit" class="text-slate-700 hover:text-black">Hapus</button></form>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+    {{-- alert hapus pay --}}
+    @foreach ($tenants as $tenant)
+        @foreach ($tenant->pay as $pay)
+            <div class="alertHapusUser bg-[#0000008a] hidden justify-center items-center fixed z-50 top-0 right-0 bottom-0 left-0">
+                <div class="bg-white w-80 px-10 py-5 rounded-md">
+                    <h1 class="text-center font-bold">Hapus tabel!</h1>
+                    <p class="text-slate-500 text-sm text-center font-bold mt-5">Apakah anda yakin?</p>
+                    <div class="w-full flex justify-end items-center mt-5">
+                        <p class="tidakHapusUser bg-[#3b83f6cc] hover:bg-blue-500 py-1 px-4 mr-3 cursor-pointer rounded-md text-white">Tidak</p>
+                        <form action="/ijqdwf03fjids/
+                        {{ $pay->id }}" method="post">
+                            @method('delete') 
+                            @csrf 
+                            <button type="submit" class="text-slate-700 hover:text-black">Hapus</button></form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    @endforeach
+
+    {{-- alert tenant berhasil ditambah --}}
+    @if (session()->has('sukses'))
+        <div class="alert-user-berhasil fixed z-40 bottom-0 left-0 flex justify-start items-end">
+            <div class="bg-blue-500 p-3 m-3 text-white rounded-md shadow-md shadow-slate-400">{{ session('sukses') }}</div>
+        </div>
+    @endif
+
+    
+@endsection

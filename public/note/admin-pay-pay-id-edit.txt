@@ -1,0 +1,244 @@
+@extends('layouts.main') 
+
+@section('main')
+    <form action="/ijqdwf03fjids/{{ $pay->id }}" method="post" class="w-[1000px] mx-auto mt-10">
+    @method('put')
+    @csrf
+    {{-- name tenant --}}
+    <div class="flex items-center">
+        <label for="nameB" class="w-[400px]">Nama</label>
+        @foreach ($pay->tenant as $tenant)
+            <input type="text" name="tenants[]" disabled value="{{ Str::title($tenant->name) }}" id="nameB" class="w-full border-2 border-slate-400 p-2  rounded-md focus:outline-none">
+        @endforeach
+    </div>
+
+    {{-- bulan --}}
+    <div class="flex items-center mt-4">
+        <label for="month" class="w-[400px]">Bulan</label>
+        <select name="month" id="month" class="w-full border-2 border-slate-400 p-2  rounded-md focus:outline-none">
+            @if (old('month', $pay->month) === 'Januari')
+                <option selected value="Januari">Januari</option>
+                <option value="Februari">Februari</option>
+                <option value="Maret">Maret</option>
+                <option value="April">April</option>
+                <option value="Mei">Mei</option>
+                <option value="Juni">Juni</option>
+                <option value="Juli">Juli</option>
+                <option value="Agustus">Agustus</option>
+                <option value="September">September</option>
+                <option value="Oktber">Oktber</option>
+                <option value="November">November</option>
+                <option value="Desember">Desember</option>
+            @elseif(old('month', $pay->month) === 'Februari')
+                <option value="Januari">Januari</option>
+                <option selected value="Februari">Februari</option>
+                <option value="Maret">Maret</option>
+                <option value="April">April</option>
+                <option value="Mei">Mei</option>
+                <option value="Juni">Juni</option>
+                <option value="Juli">Juli</option>
+                <option value="Agustus">Agustus</option>
+                <option value="September">September</option>
+                <option value="Oktber">Oktber</option>
+                <option value="November">November</option>
+                <option value="Desember">Desember</option>
+            @elseif(old('month', $pay->month) === 'Maret')
+                <option value="Januari">Januari</option>
+                <option value="Februari">Februari</option>
+                <option selected value="Maret">Maret</option>
+                <option value="April">April</option>
+                <option value="Mei">Mei</option>
+                <option value="Juni">Juni</option>
+                <option value="Juli">Juli</option>
+                <option value="Agustus">Agustus</option>
+                <option value="September">September</option>
+                <option value="Oktber">Oktber</option>
+                <option value="November">November</option>
+                <option value="Desember">Desember</option>
+            @elseif(old('month', $pay->month) === 'April')
+                <option value="Januari">Januari</option>
+                <option value="Februari">Februari</option>
+                <option value="Maret">Maret</option>
+                <option selected value="April">April</option>
+                <option value="Mei">Mei</option>
+                <option value="Juni">Juni</option>
+                <option value="Juli">Juli</option>
+                <option value="Agustus">Agustus</option>
+                <option value="September">September</option>
+                <option value="Oktber">Oktber</option>
+                <option value="November">November</option>
+                <option value="Desember">Desember</option>
+            @elseif(old('month', $pay->month) === 'Mei')
+                <option value="Januari">Januari</option>
+                <option value="Februari">Februari</option>
+                <option value="Maret">Maret</option>
+                <option value="April">April</option>
+                <option selected value="Mei">Mei</option>
+                <option value="Juni">Juni</option>
+                <option value="Juli">Juli</option>
+                <option value="Agustus">Agustus</option>
+                <option value="September">September</option>
+                <option value="Oktber">Oktber</option>
+                <option value="November">November</option>
+                <option value="Desember">Desember</option>
+            @elseif(old('month', $pay->month) === 'Juni')
+                <option value="Januari">Januari</option>
+                <option value="Februari">Februari</option>
+                <option value="Maret">Maret</option>
+                <option value="April">April</option>
+                <option value="Mei">Mei</option>
+                <option selected value="Juni">Juni</option>
+                <option value="Juli">Juli</option>
+                <option value="Agustus">Agustus</option>
+                <option value="September">September</option>
+                <option value="Oktber">Oktber</option>
+                <option value="November">November</option>
+                <option value="Desember">Desember</option>
+            @elseif(old('month', $pay->month) === 'Juli')
+                <option value="Januari">Januari</option>
+                <option value="Februari">Februari</option>
+                <option value="Maret">Maret</option>
+                <option value="April">April</option>
+                <option value="Mei">Mei</option>
+                <option value="Juni">Juni</option>
+                <option selected value="Juli">Juli</option>
+                <option value="Agustus">Agustus</option>
+                <option value="September">September</option>
+                <option value="Oktber">Oktber</option>
+                <option value="November">November</option>
+                <option value="Desember">Desember</option>
+            @elseif(old('month', $pay->month) === 'Agustus')
+                <option value="Januari">Januari</option>
+                <option value="Februari">Februari</option>
+                <option value="Maret">Maret</option>
+                <option value="April">April</option>
+                <option value="Mei">Mei</option>
+                <option value="Juni">Juni</option>
+                <option value="Juli">Juli</option>
+                <option selected value="Agustus">Agustus</option>
+                <option value="September">September</option>
+                <option value="Oktber">Oktber</option>
+                <option value="November">November</option>
+                <option value="Desember">Desember</option>
+            @elseif(old('month', $pay->month) === 'September')
+                <option value="Januari">Januari</option>
+                <option value="Februari">Februari</option>
+                <option value="Maret">Maret</option>
+                <option value="April">April</option>
+                <option value="Mei">Mei</option>
+                <option value="Juni">Juni</option>
+                <option value="Juli">Juli</option>
+                <option value="Agustus">Agustus</option>
+                <option selected value="September">September</option>
+                <option value="Oktber">Oktber</option>
+                <option value="November">November</option>
+                <option value="Desember">Desember</option>
+            @elseif(old('month', $pay->month) === 'Oktber')
+                <option value="Januari">Januari</option>
+                <option value="Februari">Februari</option>
+                <option value="Maret">Maret</option>
+                <option value="April">April</option>
+                <option value="Mei">Mei</option>
+                <option value="Juni">Juni</option>
+                <option value="Juli">Juli</option>
+                <option value="Agustus">Agustus</option>
+                <option value="September">September</option>
+                <option selected value="Oktber">Oktber</option>
+                <option value="November">November</option>
+                <option value="Desember">Desember</option>
+            @elseif(old('month', $pay->month) === 'November')
+                <option value="Januari">Januari</option>
+                <option value="Februari">Februari</option>
+                <option value="Maret">Maret</option>
+                <option value="April">April</option>
+                <option value="Mei">Mei</option>
+                <option value="Juni">Juni</option>
+                <option value="Juli">Juli</option>
+                <option value="Agustus">Agustus</option>
+                <option value="September">September</option>
+                <option value="Oktber">Oktber</option>
+                <option selected value="November">November</option>
+                <option value="Desember">Desember</option>
+            @elseif(old('month', $pay->month) === 'Desember')
+                <option value="Januari">Januari</option>
+                <option value="Februari">Februari</option>
+                <option value="Maret">Maret</option>
+                <option value="April">April</option>
+                <option value="Mei">Mei</option>
+                <option value="Juni">Juni</option>
+                <option value="Juli">Juli</option>
+                <option value="Agustus">Agustus</option>
+                <option value="September">September</option>
+                <option value="Oktber">Oktber</option>
+                <option value="November">November</option>
+                <option selected value="Desember">Desember</option>
+            @endif
+        </select>
+    </div>
+
+    {{-- tahun --}}
+    <div class="flex items-center mt-4">
+        <label for="year" class="w-[400px]">Tahun</label>
+        <input type="number" min="0" max="3999" name="year" id="year" value="{{ old('year',$pay->year) }}" onkeyup="checkPay()" class="inputText inputNumber w-full border-2 border-slate-400 p-2  rounded-md focus:outline-none">
+    </div>
+    @error('year')
+        <p class="text-red-600 ml-72 mt-1">{{ $message }}</p>
+    @enderror
+
+    {{-- biaya_sewa_air --}}
+    <div class="flex items-center mt-4">
+        <label for="biaya_sewa_air" class="w-[400px]">Biaya Sewa Air</label>
+        <input type="number" min="0" max="9999999999" name="biaya_sewa_air" value="{{ old('biaya_sewa_air',$pay->biaya_sewa_air) }}" id="biaya_sewa_air" placeholder="Rp. ;" onkeyup="checkPay()" class="inputText inputNumber inputNumberDua biayaAsli w-full border-2 border-slate-400 p-2  rounded-md focus:outline-none">
+    </div>
+    @error('biaya_sewa_air')
+        <p class="text-red-600 ml-72 mt-1">{{ $message }}</p>
+    @enderror
+
+    <input type="hidden" name="telah_dibayar" value="{{ old('telah_dibayar',$pay->telah_dibayar) }}" id="" class="biayaSaatIni">
+    {{-- penjumlahan biaya sewa air	 --}}
+    <div class="flex items-center mt-4">
+        <label for="telah_dibayar" class="w-[300px]">Cicilan yang terakhir dibayar</label>
+        <input type="number" min="0" max="9999999999" name="telah_dibayar" placeholder="*masukan cicilan yang terakhir dibayar" onkeyup="checkPay()" class="cicilan inputNumber w-[610px] -ml-[17px] border-2 border-slate-400 p-2 rounded-md appearance-none focus:outline-none">
+        <div class="proses bg-slate-500 w-24 h-11 ml-3 text-white flex justify-center items-center rounded-md cursor-pointer">Proses</div>
+    </div>
+
+    {{-- telah_dibayar	 --}}
+    <div class="flex items-center mt-4">
+        <label for="telah_dibayar" class="w-[400px]">Biaya yang telah dibayar</label>
+        <input type="number" min="0" max="9999999999" name="telah_dibayar" value="{{ old('telah_dibayar',$pay->telah_dibayar) }}" id="telah_dibayar" placeholder="**tulis angka 0 jika belum membayar" onkeyup="checkPay()" class="inputText inputNumber telahBayar biayaSekarang inputNumberDua w-full border-2 border-slate-400 p-2 rounded-md appearance-none focus:outline-none">
+    </div>
+    @error('telah_dibayar')
+        <p class="text-red-600 ml-72 mt-1">{{ $message }}</p>
+    @enderror
+
+    {{-- tanggal_dibayar --}}
+    <div class="flex items-center mt-4">
+        <label for="tanggal_dibayar" class="w-[400px]">Tanggal pembayaran terakhir</label>
+        <input type="date" name="tanggal_dibayar" id="tanggal_dibayar" value="{{ old('tanggal_dibayar',$pay->tanggal_dibayar) }}" class="inputDate w-full border-2 border-slate-400 p-2  rounded-md focus:outline-none">
+    </div>
+    @error('tanggal_dibayar')
+        <p class="text-red-600 ml-72 mt-1">{{ $message }}</p>
+    @enderror
+
+    {{-- tanggal_lunas --}}
+    <div class="flex items-center mt-4">
+        <label for="tanggal_lunas" class="w-[400px]">Tanggal Lunas</label>
+        <input type="date" name="tanggal_lunas" value="{{ old('tanggal_lunas',$pay->tanggal_lunas) }}" id="tanggal_lunas"  class="inputDate w-full border-2 border-slate-400 p-2  rounded-md focus:outline-none">
+    </div>
+    @error('tanggal_lunas')
+        <p class="text-red-600 ml-72 mt-1">{{ $message }}</p>
+    @enderror
+
+    <div class="w-full flex justify-end mt-3">
+        <button type="submit" class="buttonPay bg-blue-500 text-white py-2 px-5 rounded-md">Simpan</button>
+    </div>
+    </form>
+
+    <div class="alertMelebihiBatasPembayaran fixed z-40 bottom-0 left-0 flex justify-start items-end translate-y-full duration-500">
+        <div class="bg-red-500 p-3 m-3 text-white rounded-md shadow-md shadow-slate-400">Hasil melebihi Biaya Sewa Air!</div>
+    </div>
+@endsection
+
+@section('script-admin-dasboard')
+    <script src="{{ asset('js/script-admin-dasboard.js') }}"></script>
+@endsection

@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    @apply font-poppins
+}
+
+/* alert-user-berhasil */
+.alert-user-berhasil {
+    animation: bottom-to-top 0.5s;
+    transition: 0.5s;
+}
+
+@keyframes bottom-to-top {
+    0% {
+        transform: translateY(100px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* burger button */
+.lineBurgerOne {
+    @apply rotate-45 absolute top-2
+}
+.lineBurgerButtonTwo {
+    @apply -rotate-45 absolute top-2
+}
+.lineBurgerButtonThree {
+    @apply opacity-0
+}
+
+.listNavMobile {
+    animation: seedIn 0.3s;
+}
+
+.listNavMobileShow {
+    @apply block
+}
+
+@keyframes seedIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.formSearch {
+    animation: trasnlateSearch 0.3s;
+}
+
+@keyframes trasnlateSearch {
+    0% {
+        transform: translateY(70%)
+    }
+    100% {
+        transform: translateY(0)
+    }
+}
+
+.btnDropDownNamaPenggunaMargin {
+    @apply mb-1 border border-slate-400
+}
+
+.dropDownNamaPenggunaShow {
+    @apply h-max overflow-auto
+}
+
+.arrowDownShow {
+    @apply rotate-180 mt-3
+}
+
+/* Untuk browser berbasis WebKit seperti Google Chrome dan Safari */
+.telahBayar::-webkit-outer-spin-button,
+.telahBayar::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Untuk browser lainnya */
+.telahBayar {
+  -moz-appearance: textfield;
+}
+
+.arrowDropdownRotate {
+    @apply rotate-180
+}
+
+.listDropdownShow {
+    @apply block
+}
+
+.listDropdown {
+    animation: listDropdown 0.3s;
+}
+
+@keyframes listDropdown {
+    0% {
+        @apply opacity-0
+    }
+
+    100% {
+        @apply opacity-100
+    }
+}
+
+.containerDataUser::-webkit-scrollbar, .containerTabelPembayaran::-webkit-scrollbar {
+    @apply w-[7px]
+}
+
+.containerDataUser::-webkit-scrollbar-thumb, .containerTabelPembayaran::-webkit-scrollbar-thumb {
+    @apply bg-gray-scroll
+}
+
+.sectionNamePABShadow {
+    @apply shadow-md shadow-gray-100
+}
+
+.trTablePembayaranPenggunaShadow {
+    @apply shadow-md shadow-slate-200 border-none
+}
+
+.proses[disabled] {
+    @apply opacity-50 pointer-events-none
+}

@@ -1,0 +1,149 @@
+// aler user berhasil ditambahkan
+const alertUserBerhasil = document.querySelector('.alert-user-berhasil');
+setTimeout(() => {
+    alertUserBerhasil.style.transform = 'translateY(100%)';
+}, 5000);
+
+// cek button tambah user
+function addUserCheck() {
+    const inputNameUser = document.querySelector('.inputNameUser');
+    const buttonAddUser = document.querySelector('.buttonAddUser');
+    if(inputNameUser.value.length > 2) {
+        buttonAddUser.disabled = false;
+        buttonAddUser.style.opacity = 1;
+    } else {
+        buttonAddUser.disabled = true;
+        buttonAddUser.style.opacity = 0.4;
+    }
+}
+
+// aler hapus user
+const buttonHapusUser = document.querySelectorAll('.buttonHapusUser');
+const alertHapusUser = document.querySelectorAll('.alertHapusUser');
+const tidakHapusUser = document.querySelectorAll('.tidakHapusUser');
+for(let a = 0; a < buttonHapusUser.length || a < alertHapusUser.length || a < tidakHapusUser.length; a++) {
+    buttonHapusUser[a].addEventListener('click', () => {
+        alertHapusUser[a].style.display = 'flex';
+    });
+    tidakHapusUser[a].addEventListener('click', () => {
+        alertHapusUser[a].style.display = 'none';
+    });
+}
+
+// check pay
+function checkPay() {
+    const inputText = document.querySelectorAll('.inputText');
+    const buttonPay = document.querySelector('.buttonPay');
+    const inputDate = document.querySelector('.inputDate');
+
+    if(inputText[0].value.length > 3 && inputText[1].value.length > 1 && inputText[2].value.length > 0) {
+        buttonPay.disabled = false;
+        buttonPay.style.opacity = 1;
+    } else {
+        buttonPay.disabled = true;
+        buttonPay.style.opacity = 0.4;
+    }
+    
+}
+
+// validasi tanggal hilang jika biaya yang telah dibayar bernilai 0
+const telahBayar = document.querySelector('.telahBayar');
+const inputDate = document.querySelectorAll('.inputDate');
+telahBayar.addEventListener('input', () => {
+    const numberValue = telahBayar.value;
+    if(numberValue === '0') {
+        inputDate[0].disabled = true;
+        inputDate[1].disabled = true;
+        inputDate[0].style.opacity = 0.4;
+        inputDate[1].style.opacity = 0.4;
+    } else {
+        inputDate[0].disabled = false;
+        inputDate[1].disabled = false;
+        inputDate[0].style.opacity = 1;
+        inputDate[1].style.opacity = 1;
+    }
+});
+
+// validasi user tidak boleh memasukan angka lebih kecil dari 0
+const inputs = document.querySelectorAll('.inputNumber');
+
+inputs.forEach(input => {
+    input.addEventListener('input', function() {
+        if (parseFloat(input.value) <= 0 && input.value !== "0") {
+            input.value = '';
+        }
+        if (/^0\d/.test(input.value)) {
+            input.value = '';
+        }
+        if (/^-?0$/.test(input.value)) {
+            input.value = '0';
+        }
+    });
+});
+
+const btnDropDownNamaPengguna = document.querySelectorAll('.btnDropDownNamaPengguna');
+const dropDownNamaPengguna = document.querySelectorAll('.dropDownNamaPengguna'); 
+const arrowDown = document.querySelectorAll('.arrowDown'); 
+for(let b = 0; b < btnDropDownNamaPengguna.length || b < dropDownNamaPengguna.length || b < arrowDown.length; b++) {
+    btnDropDownNamaPengguna[b].addEventListener('click', () => {
+        btnDropDownNamaPengguna[b].classList.toggle('btnDropDownNamaPenggunaMargin');
+        dropDownNamaPengguna[b].classList.toggle('dropDownNamaPenggunaShow');
+        arrowDown[b].classList.toggle('arrowDownShow');
+    });
+}
+
+// validasi tambah-tambah cicilan
+// mengambil elemen dengan class yang dibutuhkan
+const biayaAsli = document.querySelector('.biayaAsli');
+const biayaSaatIni = document.querySelector('.biayaSaatIni');
+const cicilan = document.querySelector('.cicilan');
+const proses = document.querySelector('.proses');
+const biayaSekarang = document.querySelector('.biayaSekarang');
+const alertMelebihiBatasPembayaran = document.querySelector('.alertMelebihiBatasPembayaran');
+
+// mendefinisikan event click pada tombol proses
+proses.addEventListener('click', function() {
+    let nilaiSaatIni = parseInt(biayaSaatIni.value);
+    let nilaiCicilan = parseInt(cicilan.value);
+
+    // jika nilai cicilan kosong atau tidak diisi
+    if (!nilaiCicilan) {
+        return;
+    }
+
+    let totalBiaya = nilaiSaatIni + nilaiCicilan;
+
+    // jika total biaya melebihi biaya asli
+    if (totalBiaya > biayaAsli.value) {
+        // alert('Melebihi batas!');
+        alertMelebihiBatasPembayaran.style.transform = 'translateY(0)';
+        setTimeout(() => {
+            alertMelebihiBatasPembayaran.style.transform = 'translateY(100%)';
+        }, 5000);
+        nilaiCicilan = biayaAsli.value - nilaiSaatIni;
+        cicilan.value = nilaiCicilan;
+    }
+
+    // menghitung nilai biaya sekarang
+    let biayaSekarangValue = nilaiSaatIni + nilaiCicilan;
+    biayaSekarang.value = biayaSekarangValue;
+});
+
+// cek input search desktop
+function checkInput() {
+    const searchInput = document.querySelector(".inputSearch").value.replace(/\s/g,'');
+    const btnSearch = document.querySelector(".btnSearch");
+
+    if (searchInput.length > 0 ) {
+    btnSearch.disabled = false;
+    } else {
+    btnSearch.disabled = true;
+    }
+}
+
+
+// admin drop down
+const adminDropDown = document.querySelector('.adminDropDown');
+adminDropDown.addEventListener('click', () => {
+    alert('ok');
+});

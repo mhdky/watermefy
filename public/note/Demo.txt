@@ -1,0 +1,9 @@
+index/setting maxlength="10"
+
+SetingController-> method updatePassword
+
+SetingController-> method update
+
+RegisteredUserController -> method create
+
+home.blade.php
